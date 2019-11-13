@@ -73,10 +73,17 @@ public class NacosNamingService implements NamingService {
 
     private NamingProxy serverProxy;
 
+    /**
+     * 通过服务地址列表创建服务实例
+     * @param serverList
+     */
     public NacosNamingService(String serverList) {
         Properties properties = new Properties();
         properties.setProperty(PropertyKeyConst.SERVER_ADDR, serverList);
 
+        /**
+         * 加载属性并初始化
+         */
         init(properties);
     }
 
@@ -85,13 +92,18 @@ public class NacosNamingService implements NamingService {
     }
 
     private void init(Properties properties) {
+        // 根据属性定义命名空间
         namespace = InitUtils.initNamespaceForNaming(properties);
         initServerAddr(properties);
         InitUtils.initWebRootContext();
+        // 初始化缓存目录
         initCacheDir();
+        // 初始化日志文件名
         initLogName(properties);
 
+        // 事件分发器
         eventDispatcher = new EventDispatcher();
+        // 服务代理
         serverProxy = new NamingProxy(namespace, endpoint, serverList);
         serverProxy.setProperties(properties);
         beatReactor = new BeatReactor(serverProxy, initClientBeatThreadCount(properties));
@@ -128,6 +140,7 @@ public class NacosNamingService implements NamingService {
     }
 
     private void initServerAddr(Properties properties) {
+        // 获取服务地址列表
         serverList = properties.getProperty(PropertyKeyConst.SERVER_ADDR);
         endpoint = InitUtils.initEndpoint(properties);
         if (StringUtils.isNotEmpty(endpoint)) {

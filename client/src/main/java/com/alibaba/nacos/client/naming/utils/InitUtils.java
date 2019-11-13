@@ -41,6 +41,8 @@ public class InitUtils {
         String tmpNamespace = null;
 
 
+        // 返回是否使用云命名空间parsing
+        // 若PropertyKeyConst与SystemPropertyKeyConst中为空，则默认为true
         String isUseCloudNamespaceParsing =
             properties.getProperty(PropertyKeyConst.IS_USE_CLOUD_NAMESPACE_PARSING,
                 System.getProperty(SystemPropertyKeyConst.IS_USE_CLOUD_NAMESPACE_PARSING,
@@ -111,6 +113,7 @@ public class InitUtils {
             return "";
         }
         // Whether to enable domain name resolution rules
+        // 是否启用域名解析规则
         String isUseEndpointRuleParsing =
             properties.getProperty(PropertyKeyConst.IS_USE_ENDPOINT_PARSING_RULE,
                 System.getProperty(SystemPropertyKeyConst.IS_USE_ENDPOINT_PARSING_RULE,
